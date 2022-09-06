@@ -1,0 +1,30 @@
+@model System.Collections.Generic.List<WebProjects.Models.Data.Project>
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<h2>Listado de proyectos activos</h2>
+
+<div class="row">
+    <div class="table-responsive">
+        <table class="table">
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Cantidad de tareas</th>
+            </tr>
+            
+            @foreach (var project in Model)
+            {
+                <tr>
+                    <td>@project.ProjectId</td>
+                    <td>@project.ProjectName</td>
+                    <td>?</td>
+                </tr>
+            }
+            
+        </table>
+    </div>
+</div>
