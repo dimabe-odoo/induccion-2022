@@ -19,13 +19,26 @@ public class ProjectDal : IProjectDal
     public ProjectDal()
     {
         _projects = new List<Project>();
+        Random random = new Random();
         for (int i = 1; i <= 20; i++)
         {
-            _projects.Add(new Project
+            var project = new Project
             {
                 ProjectId = i,
-                ProjectName = $"Proyecto número {i}"
-            });
+                ProjectName = $"Proyecto número {i}",
+                ProjectTasks = new List<ProjectTask>()
+            };
+            for (int j = 1; j < random.Next(2, 7); j++)
+            {
+                project.ProjectTasks.Add(new ProjectTask
+                {
+                    ProjectId = j,
+                    IsClosed = random.Next(2) == 1,
+                    ProjectTaskName = $"Tarea {j}",
+                    ProjectTaskId = int.Parse(i.ToString() + j.ToString())
+                });
+            }
+            _projects.Add(project);
         }
     }
 
