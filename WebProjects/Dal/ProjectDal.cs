@@ -44,7 +44,7 @@ public class ProjectDal : IProjectDal
 
     public List<Project> GetAll()
     {
-        return _projects;
+        return _projects.OrderByDescending(x => x.ProjectId).ToList();
     }
 
     public Project GetById(int id)
@@ -58,7 +58,7 @@ public class ProjectDal : IProjectDal
 
     public void Save(Project project)
     {
-        throw new NotImplementedException();
+       _projects.Add(project);
     }
 
     public void Update(int id, Project project)

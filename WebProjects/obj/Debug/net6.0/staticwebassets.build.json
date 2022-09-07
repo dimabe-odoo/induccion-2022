@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "bUFGegh03oBgGN29xSce201kZJX+dVJu2JSSkbKAZk8=",
+  "Hash": "1YWEYHXoAwKRKe2BY3K1DHQ3gYOdHB5VwR5kDVZB4h8=",
   "Source": "WebProjects",
   "BasePath": "_content/WebProjects",
   "Mode": "Default",
@@ -867,6 +867,23 @@
       "OriginalItemSpec": "wwwroot/lib/bootstrap/LICENSE"
     },
     {
+      "Identity": "/Users/leonardonorambuena/RiderProjects/WebProjects/WebProjects/wwwroot/lib/fontawesome/fontawesome.min.css",
+      "SourceId": "WebProjects",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/leonardonorambuena/RiderProjects/WebProjects/WebProjects/wwwroot/",
+      "BasePath": "_content/WebProjects",
+      "RelativePath": "lib/fontawesome/fontawesome.min.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/lib/fontawesome/fontawesome.min.css"
+    },
+    {
       "Identity": "/Users/leonardonorambuena/RiderProjects/WebProjects/WebProjects/wwwroot/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js",
       "SourceId": "WebProjects",
       "SourceType": "Discovered",
@@ -1069,6 +1086,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot/lib/jquery/LICENSE.txt"
+    },
+    {
+      "Identity": "/Users/leonardonorambuena/RiderProjects/WebProjects/WebProjects/wwwroot/uploads/vuejs.png",
+      "SourceId": "WebProjects",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/leonardonorambuena/RiderProjects/WebProjects/WebProjects/wwwroot/",
+      "BasePath": "_content/WebProjects",
+      "RelativePath": "uploads/vuejs.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/uploads/vuejs.png"
     }
   ]
 }

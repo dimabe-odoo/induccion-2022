@@ -10,7 +10,9 @@
         <h2>Listado de proyectos activos</h2>
     </div>
     <div class="col-6">
-        <button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#modal-add-project"></button>
+        <button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#modal-add-project">
+            <i class="fa fa-plus"></i>
+        </button>
     </div>
 </div>
 
@@ -41,16 +43,16 @@
                                 </tr>
                                     
                             
-                            @foreach (var task in project.ProjectTasks)
-                            {
-                                <tr>
-                                    <td>@task.ProjectTaskId</td>
-                                    <td>@task.ProjectTaskName</td>
-                                </tr>
-                            }
+                                @foreach (var task in project.ProjectTasks)
+                                {
+                                    <tr>
+                                        <td>@task.ProjectTaskId</td>
+                                        <td>@task.ProjectTaskName</td>
+                                    </tr>
+                                }
                             
                             
-                        </table>
+                            </table>
                             
                         }
                     </td>
@@ -60,3 +62,5 @@
         </table>
     </div>
 </div>
+
+@await Html.PartialAsync("_ModalAddProject")
