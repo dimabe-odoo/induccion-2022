@@ -8,13 +8,10 @@ namespace WebProjects.Controllers;
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
-
-    private readonly IProjectDal _db;
-
+    
     public HomeController(ILogger<HomeController> logger)
     {
         _logger = logger;
-        _db = new ProjectDal();
     }
 
     public IActionResult Index()

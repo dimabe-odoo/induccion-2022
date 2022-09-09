@@ -1,4 +1,4 @@
-@model System.Collections.Generic.List<WebProjects.Models.Data.Project>
+@model System.Collections.Generic.List<WebProjects.Models.Models.ViewModels.IndexProjectViewModel>
 
 @{
     ViewBag.Title = "title";
@@ -32,29 +32,11 @@
                 <tr>
                     <td>@project.ProjectId</td>
                     <td>@project.ProjectName</td>
-                    <td>@project.ProjectTasks?.Count</td>
+                    <td>@project.ProjectTaskCount</td>
                     <td>
-                        @if (project.ProjectTasks != null)
-                        {
-                            <table class="table">
-                                <tr>
-                                    <th>Id</th>
-                                    <th>Tarea</th>
-                                </tr>
-                                    
-                            
-                                @foreach (var task in project.ProjectTasks)
-                                {
-                                    <tr>
-                                        <td>@task.ProjectTaskId</td>
-                                        <td>@task.ProjectTaskName</td>
-                                    </tr>
-                                }
-                            
-                            
-                            </table>
-                            
-                        }
+                        <button class="btn btn-danger">
+                            <i class="fa fa-trash"></i>
+                        </button>
                     </td>
                 </tr>
             }

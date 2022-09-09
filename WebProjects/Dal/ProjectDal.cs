@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using WebProjects.Models.Data;
 
 namespace WebProjects.Models.Dal;
@@ -5,69 +6,67 @@ namespace WebProjects.Models.Dal;
 
 public interface IProjectDal
 {
-    public List<Project> GetAll();
-    public Project GetById(int id);
-    public void Save(Project project);
-    public void Update(int id, Project project);
-    public bool Delete(int id);
+    public Task<List<Project>> GetAll();
+    public Task<Project> GetById(int id);
+    public Task Save(Project project);
+    public Task Update(int id, Project project);
+    public Task<bool> Delete(int id);
+
+    public Task<int> CountTasks(int projectId);
 }
 
 public class ProjectDal : IProjectDal
 {
-    private List<Project> _projects;
-
-    public ProjectDal()
+    private readonly ApplicationDbContext _db;
+    public ProjectDal(ApplicationDbContext db)
     {
-        _projects = new List<Project>();
-        Random random = new Random();
-        for (int i = 1; i <= 20; i++)
-        {
-            var project = new Project
-            {
-                ProjectId = i,
-                ProjectName = $"Proyecto número {i}",
-                ProjectTasks = new List<ProjectTask>()
-            };
-            for (int j = 1; j < random.Next(2, 7); j++)
-            {
-                project.ProjectTasks.Add(new ProjectTask
-                {
-                    ProjectId = j,
-                    IsClosed = random.Next(2) == 1,
-                    ProjectTaskName = $"Tarea {j}",
-                    ProjectTaskId = int.Parse(i.ToString() + j.ToString())
-                });
-            }
-            _projects.Add(project);
-        }
+        _db = db;
+    }
+    
+    public async Task<List<Project>> GetAll()
+    {
+        return await _db.Projects.OrderByDescending(x => x.ProjectId).ToListAsync();
     }
 
-    public List<Project> GetAll()
+    public async Task<Project> GetById(int id)
     {
-        return _projects.OrderByDescending(x => x.ProjectId).ToList();
-    }
-
-    public Project GetById(int id)
-    {
-        Project? result = _projects.FirstOrDefault(x => x.ProjectId == id);
+        Project? result = await _db.Projects.FirstOrDefaultAsync(x => x.ProjectId == id);
         if (result == null)
             throw new Exception("No se ha encontrado el proyecto");
 
         return result;
     }
 
-    public void Save(Project project)
+    public async Task Save(Project project)
     {
-       _projects.Add(project);
+       _db.Projects.Add(project);
+       await _db.SaveChangesAsync();
     }
 
-    public void Update(int id, Project project)
+    public async Task Update(int id, Project project)
     {
-        throw new NotImplementedException();
+        var projectToUpdate = await GetById(id);
+
+        projectToUpdate.ProjectName = project.ProjectName;
+        if (!string.IsNullOrEmpty(project.ProjectCover))
+        {
+            projectToUpdate.ProjectCover = project.ProjectCover;
+        }
+        _db.Entry(projectToUpdate).State = EntityState.Modified;
+
+        await _db.SaveChangesAsync();
     }
 
-    public bool Delete(int id)
+    public async Task<bool> Delete(int id)
     {
-        throw new NotImplementedException();
+        var projectToDelete = await GetById(id);
+        _db.Projects.Remove(projectToDelete);
+        await _db.SaveChangesAsync();
+        return true;
+    }
+
+    public async Task<int> CountTasks(int projectId)
+    {
+        return await _db.ProjectTasks.CountAsync(x => x.ProjectId == projectId);
     }
 } 

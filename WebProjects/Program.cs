@@ -1,11 +1,16 @@
+using Microsoft.EntityFrameworkCore;
 using WebProjects.Models.Dal;
+using WebProjects.Models.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-//builder.Services.AddTransient<IProjectDal, ProjectDal>();
+builder.Services.AddTransient<IProjectDal, ProjectDal>();
+
+builder.Services.AddDbContext<ApplicationDbContext>(x => 
+    x.UseSqlServer(builder.Configuration.GetConnectionString("SqlConnection")));
 
 var app = builder.Build();
 

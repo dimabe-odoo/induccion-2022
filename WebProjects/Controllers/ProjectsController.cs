@@ -9,17 +9,32 @@ namespace WebProjects.Controllers;
 public class ProjectsController : Controller
 {
     private readonly IProjectDal _db;
-    private IWebHostEnvironment _hostingEnvironment;
+    private readonly IWebHostEnvironment _hostingEnvironment;
 
-    public ProjectsController(IWebHostEnvironment environment)
+    public ProjectsController(IWebHostEnvironment environment, IProjectDal db)
     {
         _hostingEnvironment = environment;
-        _db = new ProjectDal();
+        _db = db;
     }
 
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
-        return View(_db.GetAll());
+        List<IndexProjectViewModel> vm = new List<IndexProjectViewModel>();
+        foreach (var item in await _db.GetAll())
+        {
+            vm.Add(new IndexProjectViewModel
+            {
+                ProjectId = item.ProjectId,
+                ProjectName = item.ProjectName,
+                ProjectTaskCount = await _db.CountTasks(item.ProjectId)
+            });
+        }
+        return View(vm);
+    }
+
+    public ViewResult Show()
+    {
+        return View("_ModalAddProject");
     }
 
     public async Task<IActionResult> Save(AddProjectViewModel model)
@@ -36,16 +51,14 @@ public class ProjectsController : Controller
         if (model?.ProjectFile != null)
         {
             var filePath = await ImageUpload.UploadImage(folderPath, model?.ProjectFile);
-
-            int projectId = _db.GetAll().MaxBy(x => x.ProjectId)!.ProjectId + 1;
+            
             var project = new Project
             {
                 ProjectName = model.ProjectName,
                 ProjectCover = filePath,
-                ProjectId = projectId
             };
         
-            _db.Save(project);
+            await _db.Save(project);
         }
 
         SetMessage("Se ha registrado el nuevo proyecto");
@@ -55,16 +68,8 @@ public class ProjectsController : Controller
 
     public void SetMessage(string message, bool isError = false)
     {
-        var messageType = "";
-        if (isError == true)
-        {
-            messageType = "Error";
-        }
-        else
-        {
-            messageType = "Message";
-        }
-
+        var messageType = isError ? "Error": "Message";
+        
         TempData[messageType] = message;
     }
 }
